@@ -1,0 +1,998 @@
+/* styles.css */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+
+        /* Bannière d'alerte rouge pour les navires à 1km */
+        .banniere-alerte {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(45deg, #ff0000, #cc0000);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 10000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            animation: pulse-alert 1s infinite;
+        }
+
+        @keyframes pulse-alert {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+
+        /* Compteur de rafraîchissement */
+        .compteur-refresh {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 9999;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border: 2px solid #4CAF50;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: end;
+            margin-bottom: 20px;
+        }
+
+        .form-group > div {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            background: white;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,123,255,0.4);
+        }
+
+        .btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .content {
+            display: flex;
+            height: 800px;
+        }
+
+        .map-container {
+            flex: 1;
+            position: relative;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 450px;
+            background: #f8f9fa;
+            border-left: 1px solid #dee2e6;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .stats {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stats h3 {
+            margin: 0 0 15px 0;
+            color: #495057;
+            font-size: 1.3em;
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .stat-item:last-child {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .navires-list {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navires-list h3 {
+            background: #495057;
+            color: white;
+            margin: 0;
+            padding: 15px 20px;
+            font-size: 1.2em;
+        }
+
+        .navire-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f1f3f4;
+            transition: background-color 0.3s ease;
+        }
+
+        .navire-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .navire-item:last-child {
+            border-bottom: none;
+        }
+
+        /* Styles pour les navires selon leur distance */
+        .navire-normal {
+            border-left: 4px solid #28a745;
+        }
+
+        .navire-vigilance {
+            border-left: 4px solid #fd7e14;
+            background-color: #fff8f1;
+        }
+
+        .navire-alerte {
+            border-left: 4px solid #dc3545;
+            background-color: #fff5f5;
+        }
+
+        .navire-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .navire-nom {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #495057;
+        }
+
+        .navire-distance {
+            font-size: 0.9em;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+
+        .distance-normal {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .distance-vigilance {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .distance-alerte {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .navire-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .navire-detail {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navire-detail strong {
+            color: #495057;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border: 1px solid #c3e6cb;
+        }
+
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px;
+            border: 1px solid #bee5eb;
+        }
+
+        /* Status indicator */
+        .status-indicator {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .status-connecting {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .status-connected {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Badge Hostinger */
+        .hostinger-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(90deg, #673AB7, #9C27B0);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: 400px;
+            }
+            
+            .form-group {
+                flex-direction: column;
+            }
+            
+            .form-group > div {
+                min-width: auto;
+            }
+        }
+
+
+
+    /* Styles pour les marqueurs directionnels */
+        .navire-marker-directionnel {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Styles pour les navires non conformes */
+        .navire-non-conforme {
+            border-left: 4px solid #ffc107 !important;
+            background-color: #fffbf0 !important;
+        }
+
+        .navire-non-conforme:hover {
+            background-color: #fff8e1 !important;
+        }
+
+        /* Amélioration du compteur de rafraîchissement */
+        .compteur-refresh {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.85);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            z-index: 9999;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+            border: 2px solid #4CAF50;
+            backdrop-filter: blur(10px);
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .compteur-refresh.mode-alerte {
+            border-color: #dc3545;
+            animation: pulse-alerte-compteur 2s infinite;
+        }
+
+        @keyframes pulse-alerte-compteur {
+            0%, 100% { box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4); }
+            50% { box-shadow: 0 6px 30px rgba(220, 53, 69, 0.7); }
+        }
+
+        /* Amélioration des icônes directionnelles */
+        .navire-marker-directionnel .leaflet-div-icon {
+            background: transparent !important;
+            border: none !important;
+        }
+
+        /* Section navires non conformes */
+        .navires-list:last-child {
+            margin-top: 20px;
+        }
+
+        .navires-list:last-child h3 {
+            background: linear-gradient(135deg, #ffc107 0%, #ff8f00 100%);
+            color: #000;
+        }
+
+        /* Styles pour les navires trackés */
+        .navire-item.navire-tracked {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .navire-item.navire-tracked::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, 
+                transparent 40%, 
+                rgba(220, 53, 69, 0.1) 50%, 
+                transparent 60%);
+            animation: tracking-sweep 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes tracking-sweep {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Badge de tracking en temps réel */
+        .badge-tracking {
+            display: inline-block;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-left: 8px;
+            box-shadow: 0 2px 4px rgba(220, 53, 69, 0.3);
+            animation: badge-pulse 2s infinite;
+        }
+
+        @keyframes badge-pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* Amélioration des popups de carte */
+        .leaflet-popup-content {
+            margin: 12px 16px !important;
+            line-height: 1.4 !important;
+        }
+
+        .leaflet-popup-content h4 {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 8px;
+            margin-bottom: 12px !important;
+        }
+
+        /* Indicateurs de statut améliorés */
+        .status-indicator {
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .status-connecting {
+            background: linear-gradient(135deg, rgba(255, 243, 205, 0.9), rgba(255, 234, 167, 0.9));
+            color: #856404;
+            border-color: #ffeaa7;
+        }
+
+        .status-connected {
+            background: linear-gradient(135deg, rgba(212, 237, 218, 0.9), rgba(195, 230, 203, 0.9));
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .status-error {
+            background: linear-gradient(135deg, rgba(248, 215, 218, 0.9), rgba(245, 198, 203, 0.9));
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        /* Animation pour les navires en alerte */
+        .navire-alerte {
+            animation: alerte-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes alerte-glow {
+            from { box-shadow: 0 0 5px rgba(220, 53, 69, 0.3); }
+            to { box-shadow: 0 0 15px rgba(220, 53, 69, 0.6); }
+        }
+
+        /* Style pour les flèches directionnelles sur la carte */
+        .navire-fleche {
+            transition: transform 0.3s ease;
+        }
+
+        .navire-fleche:hover {
+            transform: scale(1.2);
+        }
+
+        /* Amélioration responsive */
+        @media (max-width: 768px) {
+            .compteur-refresh {
+                top: 10px;
+                right: 10px;
+                padding: 10px 15px;
+                font-size: 14px;
+                min-width: 150px;
+            }
+            
+            .navire-marker-directionnel {
+                transform: scale(0.8);
+            }
+        }
+
+        /* Animation de chargement pour les sections */
+        .loading-shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* Styles pour les coordonnées GPS améliorées */
+        .gps-coordinates {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+        }
+
+        /* Badge de cap pour les navires */
+        .cap-badge {
+            display: inline-block;
+            background: rgba(0, 123, 255, 0.8);
+            color: white;
+            padding: 1px 6px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: bold;
+            margin-left: 4px;
+        }
+
+        /* Amélioration des alertes de bannière */
+        .banniere-alerte {
+            background: linear-gradient(45deg, #dc3545, #c82333, #dc3545);
+            background-size: 400% 400%;
+            animation: gradient-flow 2s ease infinite, pulse-alert 1s infinite;
+        }
+
+        @keyframes gradient-flow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        /* Styles pour le panneau d'attention intégré dans la sidebar */
+        .panneau-attention-sidebar {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: glow-orange 2s ease-in-out infinite alternate;
+        }
+
+        .panneau-attention-sidebar .panneau-titre {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .panneau-attention-sidebar .panneau-titre span {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+
+        .navire-panneau-sidebar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .navire-panneau-sidebar:last-child {
+            margin-bottom: 0;
+        }
+
+        @keyframes glow-orange {
+            from { 
+                box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            }
+            to { 
+                box-shadow: 0 4px 20px rgba(255, 152, 0, 0.6), 0 0 15px rgba(255, 152, 0, 0.2);
+            }
+        }
+
+        /* Amélioration des icônes avec numéros */
+        .navire-marker-directionnel {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* Style pour les numéros des navires dans les listes */
+        .navire-item .navire-nom {
+            position: relative;
+        }
+
+        .navire-numero {
+            display: inline-block;
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: bold;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Animation pour les nouvelles attributions de numéros */
+        @keyframes numero-nouveau {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .numero-nouveau {
+            animation: numero-nouveau 0.5s ease-out;
+        }
+
+        /* Responsive pour le panneau sidebar */
+        @media (max-width: 768px) {
+            .panneau-attention-sidebar {
+                margin-bottom: 15px;
+                padding: 12px;
+                border-radius: 8px;
+            }
+            
+            .panneau-attention-sidebar .panneau-titre {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            
+            .navire-panneau-sidebar {
+                padding: 8px;
+                margin-bottom: 8px;
+            }
+            
+            .navire-panneau-sidebar > div:first-child {
+                font-size: 13px !important;
+            }
+            
+            .navire-panneau-sidebar > div:last-child {
+                font-size: 11px !important;
+            }
+        }
+
+        /* Amélioration des statistiques avec la nouvelle ligne */
+        .stats .stat-item:nth-child(6) {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 86, 179, 0.1));
+            border-radius: 5px;
+            padding: 8px;
+            margin: 5px -5px;
+        }
+
+        /* Style pour indiquer les coordonnées verrouillées */
+        .coords-locked-indicator {
+            display: inline-block;
+            margin-left: 10px;
+            padding: 4px 8px;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+        }
+
+        /* Animations plus fluides pour les alertes */
+        .banniere-alerte {
+            background: linear-gradient(45deg, #dc3545, #c82333, #dc3545);
+            background-size: 400% 400%;
+            animation: gradient-flow-smooth 3s ease infinite, pulse-alert-smooth 2s infinite;
+        }
+
+        @keyframes gradient-flow-smooth {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse-alert-smooth {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.9; transform: scale(1.01); }
+        }
+
+        /* Style pour les icônes plus grandes avec numéros */
+        .navire-marker-directionnel .leaflet-div-icon {
+            background: transparent !important;
+            border: none !important;
+            overflow: visible !important;
+        }
+
+        /* Indicateur de persistance dans les stats */
+        .stat-item .stat-value.persistent {
+            color: #007bff;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .stat-item .stat-value.persistent::after {
+            content: '💾';
+            font-size: 10px;
+            margin-left: 4px;
+            opacity: 0.7;
+        }
+
+        /* Amélioration du contraste pour la lisibilité */
+        .navire-panneau-sidebar div:last-child {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        /* Style pour les coordonnées dans les popups avec indication de verrouillage */
+        .popup-coords-locked {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid rgba(40, 167, 69, 0.3);
+            border-radius: 4px;
+            padding: 4px 8px;
+            margin-top: 5px;
+        }
+
+        .popup-coords-locked::before {
+            content: '🔒 ';
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Compteur journalier */
+        .compteur-journalier {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .compteur-journalier h3 {
+            margin: 0 0 15px 0;
+            color: #495057;
+            font-size: 1.2em;
+            border-bottom: 2px solid #dc3545;
+            padding-bottom: 10px;
+        }
+
+        .compteur-jour-actuel {
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .compteur-jour-actuel .jour-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .compteur-jour-actuel .jour-compteur {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .compteur-historique {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .jour-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #f1f3f4;
+            transition: background-color 0.2s;
+        }
+
+        .jour-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .jour-item:last-child {
+            border-bottom: none;
+        }
+
+        .jour-numero {
+            font-weight: 600;
+            color: #6c757d;
+        }
+
+        .jour-valeur {
+            font-weight: bold;
+            color: #dc3545;
+        }
+
+        /* Total cumulé */
+        .compteur-total {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 14px;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+
+        .compteur-total strong {
+            color: #dc3545;
+            font-size: 16px;
+        }
+
+        /* Bouton toggle historique */
+        .compteur-historique-toggle {
+            background: linear-gradient(135deg, #007bff, #0056b3);
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin: 10px 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            user-select: none;
+        }
+
+        .compteur-historique-toggle:hover {
+            background: linear-gradient(135deg, #0056b3, #003d82);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+        }
+
+        .compteur-historique-toggle:active {
+            transform: translateY(0);
+        }
+
+        .compteur-historique-toggle span {
+            display: inline-block;
+            margin-right: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Bouton effacer historique */
+        .btn-effacer-historique {
+            width: 100%;
+            background: linear-gradient(135deg, #dc3545, #c82333);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-effacer-historique:hover {
+            background: linear-gradient(135deg, #c82333, #bd2130);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+        }
+
+        .btn-effacer-historique:active {
+            transform: translateY(0);
+        }
+
+        /* Émetteurs terrestres */
+        .navire-terrestre {
+            border-left: 4px solid #ffc107 !important;
+            background: repeating-linear-gradient(
+                45deg,
+                #fffbf0,
+                #fffbf0 10px,
+                #fff8e1 10px,
+                #fff8e1 20px
+            ) !important;
+        }
+
+        .navire-terrestre .navire-nom {
+            color: #856404 !important;
+        }
+
+        .navire-terrestre:hover {
+            background: repeating-linear-gradient(
+                45deg,
+                #fff8e1,
+                #fff8e1 10px,
+                #ffe082 10px,
+                #ffe082 20px
+            ) !important;
+        }
+

@@ -107,10 +107,15 @@ if (json_last_error() !== JSON_ERROR_NONE) {
     ]));
 }
 
-// L'API retourne directement un tableau
+// L'API retourne { "items": [...], "count": N } depuis la mise à jour EuRIS
 $tracks = [];
 if (is_array($data)) {
-    $tracks = $data;
+    if (isset($data['items']) && is_array($data['items'])) {
+        $tracks = $data['items'];
+    } elseif (!isset($data['items'])) {
+        // Ancien format : tableau direct
+        $tracks = $data;
+    }
 }
 
 // Normalisation des propriétés en utilisant les vrais champs de l'API

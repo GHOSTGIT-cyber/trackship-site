@@ -1,11 +1,11 @@
 <?php
 // api/config.php
-// Configuration base de données Hostinger
+// Configuration base de données Coolify (service trackship-db)
 
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'u411940699_Trackship');
-define('DB_USER', 'u411940699_ghost');
-define('DB_PASS', 'Trackship6?');
+define('DB_HOST', getenv('DB_HOST') ?: 'vspvmdgly2s24e73tqkpo8a1');
+define('DB_NAME', getenv('DB_NAME') ?: 'default');
+define('DB_USER', getenv('DB_USER') ?: 'trackship');
+define('DB_PASS', getenv('DB_PASS') ?: 'NmCGVOGy9xO');
 define('DB_CHARSET', 'utf8mb4');
 
 /**

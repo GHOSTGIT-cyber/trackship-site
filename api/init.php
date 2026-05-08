@@ -18,6 +18,22 @@ if ($secret !== $expected) {
 }
 
 try {
+    // Connexion en root pour créer le user d'application si absent
+    // (Coolify n'a pas créé le user trackship malgré la config)
+    $rootPwd = 'UbDphwqW06ENyubhJ5fKIEc2yW6nAa4HLmQWue7DKNP9XeJiaD4inX4uGodz392J';
+    $rootPdo = new PDO(
+        'mysql:host=' . DB_HOST . ';charset=utf8mb4',
+        'root',
+        $rootPwd,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+
+    $rootPdo->exec("CREATE DATABASE IF NOT EXISTS `" . DB_NAME . "` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci");
+    $rootPdo->exec("CREATE USER IF NOT EXISTS '" . DB_USER . "'@'%' IDENTIFIED BY '" . DB_PASS . "'");
+    $rootPdo->exec("GRANT ALL PRIVILEGES ON `" . DB_NAME . "`.* TO '" . DB_USER . "'@'%'");
+    $rootPdo->exec("FLUSH PRIVILEGES");
+
+    // Maintenant connexion en tant que user d'app pour créer les tables
     $pdo = getDbConnection();
 
     // Lecture du fichier SQL

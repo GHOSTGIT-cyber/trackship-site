@@ -125,7 +125,12 @@ $tracksNormalisees = array_map(function($track) {
     $lon = isset($track['lon']) ? floatval($track['lon']) : null;
     
     // Utilisation de trackID comme identifiant principal
-    $trackId = $track['trackID'] ?? null;
+    // Repli : certains tracks EuRIS arrivent sans trackID -> on ne les jette plus,
+    // on retombe sur le mmsi, puis sur un identifiant stable derive de la position.
+    $trackId = $track['trackID'] ?? $track['mmsi'] ?? null;
+    if ($trackId === null && $lat !== null && $lon !== null) {
+        $trackId = 'POS_' . substr(md5(sprintf('%.5f_%.5f', $lat, $lon)), 0, 12);
+    }
     
     // Statut de mouvement basé sur le champ "moving"
     $enMouvement = isset($track['moving']) ? $track['moving'] : null;

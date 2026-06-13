@@ -1,10 +1,21 @@
 /* styles.css */
+        /* Palette foilinparis.fr */
+        :root {
+            --brand-orange: #FF6400;
+            --brand-orange-dark: #e05800;
+            --brand-orange-darker: #b34600;
+            --brand-mint: #d8f7ea;
+            --brand-mint-2: #c7efe2;
+            --brand-cream: #fcf8f3;
+            --brand-text: #222;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
+            background: linear-gradient(135deg, #d8f7ea 0%, #fcf8f3 100%);
+            color: #222;
             min-height: 100vh;
         }
 
@@ -18,7 +29,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            background: linear-gradient(135deg, #FF6400 0%, #ff8124 100%);
             color: white;
             padding: 20px;
             text-align: center;
@@ -112,8 +123,8 @@
 
         input[type="text"]:focus, input[type="number"]:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+            border-color: #FF6400;
+            box-shadow: 0 0 0 3px rgba(255,100,0,0.25);
         }
 
         select {
@@ -129,12 +140,12 @@
 
         select:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 3px rgba(0,123,255,0.25);
+            border-color: #FF6400;
+            box-shadow: 0 0 0 3px rgba(255,100,0,0.25);
         }
 
         .btn {
-            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            background: linear-gradient(135deg, #FF6400 0%, #e05800 100%);
             color: white;
             border: none;
             padding: 12px 30px;
@@ -143,12 +154,12 @@
             font-size: 16px;
             font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,123,255,0.3);
+            box-shadow: 0 4px 12px rgba(255,100,0,0.3);
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,123,255,0.4);
+            box-shadow: 0 6px 16px rgba(255,100,0,0.4);
         }
 
         .btn:disabled {
@@ -379,7 +390,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: linear-gradient(90deg, #673AB7, #9C27B0);
+            background: linear-gradient(90deg, #FF6400, #ff8124);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
@@ -619,7 +630,7 @@
         /* Badge de cap pour les navires */
         .cap-badge {
             display: inline-block;
-            background: rgba(0, 123, 255, 0.8);
+            background: rgba(255, 100, 0, 0.8);
             color: white;
             padding: 1px 6px;
             border-radius: 10px;
@@ -699,14 +710,14 @@
 
         .navire-numero {
             display: inline-block;
-            background: linear-gradient(135deg, #007bff, #0056b3);
+            background: linear-gradient(135deg, #FF6400, #e05800);
             color: white;
             padding: 2px 6px;
             border-radius: 10px;
             font-size: 10px;
             font-weight: bold;
             margin-right: 8px;
-            box-shadow: 0 2px 4px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 2px 4px rgba(255, 100, 0, 0.3);
         }
 
         /* Animation pour les nouvelles attributions de numéros */
@@ -749,7 +760,7 @@
 
         /* Amélioration des statistiques avec la nouvelle ligne */
         .stats .stat-item:nth-child(6) {
-            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 86, 179, 0.1));
+            background: linear-gradient(135deg, rgba(255, 100, 0, 0.1), rgba(176, 70, 0, 0.1));
             border-radius: 5px;
             padding: 8px;
             margin: 5px -5px;
@@ -794,7 +805,7 @@
 
         /* Indicateur de persistance dans les stats */
         .stat-item .stat-value.persistent {
-            color: #007bff;
+            color: #FF6400;
             font-weight: bold;
             position: relative;
         }
@@ -916,7 +927,7 @@
 
         /* Bouton toggle historique */
         .compteur-historique-toggle {
-            background: linear-gradient(135deg, #007bff, #0056b3);
+            background: linear-gradient(135deg, #FF6400, #e05800);
             color: white;
             padding: 12px;
             border-radius: 6px;
@@ -929,9 +940,9 @@
         }
 
         .compteur-historique-toggle:hover {
-            background: linear-gradient(135deg, #0056b3, #003d82);
+            background: linear-gradient(135deg, #e05800, #b34600);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(255, 100, 0, 0.3);
         }
 
         .compteur-historique-toggle:active {

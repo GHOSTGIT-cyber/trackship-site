@@ -1350,6 +1350,29 @@
             }
         }
 
+        // Age de la dernière position connue (champ posTS / timestamp renvoyé par EuRIS)
+        function agePositionMinutes(navire) {
+            const ts = navire.timestamp;
+            if (ts === null || ts === undefined || ts === '') return null;
+            let ms;
+            if (typeof ts === 'number') {
+                ms = ts > 1e12 ? ts : ts * 1000; // secondes vs millisecondes
+            } else {
+                ms = Date.parse(ts);
+            }
+            if (isNaN(ms)) return null;
+            return (Date.now() - ms) / 60000;
+        }
+
+        function formaterAgePosition(navire) {
+            const age = agePositionMinutes(navire);
+            if (age === null) return 'Position: horodatage inconnu (' + (navire.timestamp ?? 'absent') + ')';
+            const quand = new Date(Date.now() - age * 60000).toLocaleTimeString('fr-FR');
+            const arr = Math.round(age);
+            if (age > 10) return '⚠️ Position figée depuis ' + arr + ' min (' + quand + ')';
+            return 'Position il y a ' + arr + ' min (' + quand + ')';
+        }
+
         // Mise à jour des marqueurs sur la carte
         function mettreAJourMarqueurs() {
             console.log('🗺️ Mise à jour des marqueurs');
@@ -1381,7 +1404,7 @@
                 const numeroText = numeroNavire && enMouvement ? '#' + numeroNavire : '';
                 const emoji = surTerre ? '📡' : '🚢';
 
-                const popupContent = '<div style="min-width: 200px;"><h4 style="margin: 0 0 10px 0; color: ' + analyse.couleur + ';">' + numeroText + (numeroText ? ' - ' : '') + emoji + ' ' + nomNavire + ' ' + analyse.emoji + '</h4>' + (surTerre ? '<div style="background: #fff3cd; padding: 5px; border-radius: 4px; margin-bottom: 8px; font-weight: bold; color: #856404;">⚠️ Type: Émetteur terrestre</div>' : '') + '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 12px;"><div><strong>Vitesse:</strong> ' + vitesse + ' kn</div><div><strong>Cap:</strong> ' + cap + '</div><div><strong>Longueur:</strong> ' + longueur + ' m</div><div><strong>MMSI:</strong> ' + mmsi + '</div><div><strong>Type:</strong> ' + typeLabel + '</div><div><strong>Distance:</strong> ' + analyse.distance + 'm</div><div><strong>Statut:</strong> <span style="color: ' + analyse.couleur + '; font-weight: bold;">' + statutTexte + '</span></div></div><div style="margin-top: 8px; font-size: 11px; color: #666;">📍 ' + navire.latitude.toFixed(6) + ', ' + navire.longitude.toFixed(6) + '</div></div>';
+                const popupContent = '<div style="min-width: 200px;"><h4 style="margin: 0 0 10px 0; color: ' + analyse.couleur + ';">' + numeroText + (numeroText ? ' - ' : '') + emoji + ' ' + nomNavire + ' ' + analyse.emoji + '</h4>' + (surTerre ? '<div style="background: #fff3cd; padding: 5px; border-radius: 4px; margin-bottom: 8px; font-weight: bold; color: #856404;">⚠️ Type: Émetteur terrestre</div>' : '') + '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 12px;"><div><strong>Vitesse:</strong> ' + vitesse + ' kn</div><div><strong>Cap:</strong> ' + cap + '</div><div><strong>Longueur:</strong> ' + longueur + ' m</div><div><strong>MMSI:</strong> ' + mmsi + '</div><div><strong>Type:</strong> ' + typeLabel + '</div><div><strong>Distance:</strong> ' + analyse.distance + 'm</div><div><strong>Statut:</strong> <span style="color: ' + analyse.couleur + '; font-weight: bold;">' + statutTexte + '</span></div></div><div style="margin-top: 8px; font-size: 11px; color: #666;">📍 ' + navire.latitude.toFixed(6) + ', ' + navire.longitude.toFixed(6) + '</div><div style="margin-top: 4px; font-size: 11px; color: #666;">🕒 ' + formaterAgePosition(navire) + '</div></div>';
 
                 const marker = L.marker([navire.latitude, navire.longitude], {icon: iconeNavire})
                     .addTo(map)
